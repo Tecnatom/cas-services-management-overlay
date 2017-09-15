@@ -24,9 +24,16 @@ function package() {
 	copy
 }
 
+function debug() {
+	package && java -Xdebug -Xrunjdwp:transport=dt_socket,address=5000,server=y,suspend=n -jar target/cas-management.war
+}
 
 function run() {
-	package && java -Xdebug -Xrunjdwp:transport=dt_socket,address=5000,server=y,suspend=n -jar target/cas-management.war 
+	package && java -jar target/cas-management.war
+}
+
+function rund() {
+	java -jar target/cas-management.war
 }
 
 if [ $# -eq 0 ]; then
@@ -48,8 +55,14 @@ case "$1" in
 	shift
     package "$@"
     ;;
+"debug")
+    debug "$@"
+    ;;
 "run")
     run "$@"
+    ;;
+"rund")
+    rund "$@"
     ;;
 *)
     help
